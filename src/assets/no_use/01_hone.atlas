@@ -1,0 +1,132 @@
+
+01_hone.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01_head
+  rotate: true
+  xy: 620, 146
+  size: 51, 75
+  orig: 51, 75
+  offset: 0, 0
+  index: -1
+02_arm_right_up
+  rotate: false
+  xy: 240, 45
+  size: 50, 85
+  orig: 50, 85
+  offset: 0, 0
+  index: -1
+03_arm_right_down
+  rotate: true
+  xy: 915, 198
+  size: 56, 98
+  orig: 56, 98
+  offset: 0, 0
+  index: -1
+04_arm_right_hand
+  rotate: false
+  xy: 474, 98
+  size: 43, 63
+  orig: 43, 63
+  offset: 0, 0
+  index: -1
+05_arm_right_sord
+  rotate: true
+  xy: 2, 132
+  size: 122, 256
+  orig: 122, 256
+  offset: 0, 0
+  index: -1
+06_arm_left_up
+  rotate: true
+  xy: 524, 152
+  size: 45, 94
+  orig: 45, 94
+  offset: 0, 0
+  index: -1
+07_arm_left_down
+  rotate: true
+  xy: 519, 92
+  size: 58, 82
+  orig: 58, 82
+  offset: 0, 0
+  index: -1
+08_arm_left_hand
+  rotate: false
+  xy: 292, 2
+  size: 53, 69
+  orig: 53, 69
+  offset: 0, 0
+  index: -1
+09_breast
+  rotate: true
+  xy: 2, 5
+  size: 125, 178
+  orig: 125, 178
+  offset: 0, 0
+  index: -1
+10_west_top
+  rotate: true
+  xy: 260, 140
+  size: 114, 124
+  orig: 114, 124
+  offset: 0, 0
+  index: -1
+11_leg_right_up
+  rotate: true
+  xy: 524, 199
+  size: 55, 149
+  orig: 55, 149
+  offset: 0, 0
+  index: -1
+12_leg_right_down
+  rotate: true
+  xy: 813, 191
+  size: 63, 100
+  orig: 63, 100
+  offset: 0, 0
+  index: -1
+13_leg_right_foot
+  rotate: true
+  xy: 386, 101
+  size: 60, 86
+  orig: 60, 86
+  offset: 0, 0
+  index: -1
+14_leg_left_up
+  rotate: true
+  xy: 675, 200
+  size: 54, 136
+  orig: 54, 136
+  offset: 0, 0
+  index: -1
+15_leg_left_down
+  rotate: false
+  xy: 182, 9
+  size: 56, 121
+  orig: 56, 121
+  offset: 0, 0
+  index: -1
+16_leg_left_foot
+  rotate: false
+  xy: 292, 73
+  size: 84, 65
+  orig: 84, 65
+  offset: 0, 0
+  index: -1
+17_west_middle
+  rotate: true
+  xy: 386, 163
+  size: 91, 136
+  orig: 91, 136
+  offset: 0, 0
+  index: -1
+18_west_bottom
+  rotate: true
+  xy: 697, 149
+  size: 49, 55
+  orig: 49, 55
+  offset: 0, 0
+  index: -1
