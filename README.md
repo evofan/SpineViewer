@@ -1,8 +1,7 @@
-# PixiJS上でSpineのファイルを読み込み、アニメーションを確認するツール。
-# (A tool for reading Spine files on PixiJS and checking animation.)
-# 背景画像・Spineデータ・アニメーションは変えられるようにする。
+# A tool for reading Spine files on PixiJS and checking animation.
+※背景画像・Spineデータ・アニメーションは差し替えられるようにする。
 
-**DEMO** 
+**DEMO**  
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
 
 reference  
