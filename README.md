@@ -30,7 +30,7 @@ TypeScript environment construction.
 **3.8.13 crash pixijs and corrupted project file Search this**  
 [http://ja.esotericsoftware.com/forum/3-8-13-crash-pixijs-and-corrupted-project-file-Search-this-12066](http://ja.esotericsoftware.com/forum/3-8-13-crash-pixijs-and-corrupted-project-file-Search-this-12066)  
 >Use the 3.8 skeletonViewer-beta.jar and run it like:  
-> java -cp skeletonViewer-beta.jar com.esotericsoftware.spine.JsonRollback input.json 3.7 output.json  
+``` java -cp skeletonViewer-beta.jar com.esotericsoftware.spine.JsonRollback input.json 3.7 output.json ```  
 >Where input.json is from 3.8. The tool will write output.json which you can then import into 3.7.  
 プロジェクトで3.8に上げてしまったSpineの元ファイルを、↑の方法で3.7以下で読み込めるように戻せた。  
 （Spineのバージョンを落とすと新しいバージョン作ったファイルが開けなくなる為、  
