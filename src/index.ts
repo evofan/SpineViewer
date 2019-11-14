@@ -52,33 +52,27 @@ app.loader
     container.addChild(bg);
 
     // text
-    text = new PIXI.Text(
-      "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2",
-      {
-        fontFamily: "Arial",
-        fontSize: 24,
-        fill: 0xf0fff0,
-        align: "center",
-        fontWeight: "bold"
-      }
-    );
+    let message: string =
+      "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    text = setText(message, "Arial", 24, 0xf0fff0, "left", "bold");
     container.addChild(text);
     text.x = 10;
     text.y = 10;
 
     // text2
-    text2 = new PIXI.Text("Touch the Alien !", {
-      fontFamily: "Arial",
-      fontSize: 24,
-      fill: 0xff0033,
-      align: "center",
-      fontWeight: "bold",
-      stroke: "#000000",
-      strokeThickness: 4,
-      dropShadow: false,
-      dropShadowColor: "#666666",
-      lineJoin: "round"
-    });
+    let message2: string = "Touch the Alien !";
+    text2 = setText(
+      message2,
+      "Arial",
+      24,
+      0xff0033,
+      "center",
+      "bold",
+      "#000000",
+      5,
+      false
+      // "#666666"
+    );
     container.addChild(text2);
     text2.x = WIDTH / 2 - text2.width / 2;
     text2.y = 420;
@@ -86,13 +80,11 @@ app.loader
     // spine
     spine = new PIXI.spine.Spine(resources.spineCharacter.spineData);
     console.log(spine); // 01_hone = width: 0と出るので？3.7だと3.7用のpixi-spine使う？
-
     spine.x = WIDTH / 2;
     spine.y = HEIGHT / 2 + offsetY;
-
     container.addChild(spine);
 
-    container.click = function() {
+    container.click = () => {
       console.log("clicked alien");
       if (text3) {
         text3.text = "";
@@ -101,8 +93,8 @@ app.loader
       playAnimation();
     };
 
-    container.tap = function() {
-      console.log("taped alien");
+    container.tap = () => {
+      console.log("tapped alien");
       if (text3) {
         text3.text = "";
         container.removeChild(text3);
@@ -114,25 +106,53 @@ app.loader
   });
 
 /**
- * Change & Play Animation for Alien.
+ * Change & Play Alien Animation.
  */
-function playAnimation() {
-  // text3
-  text3 = new PIXI.Text(`animation: ${anim_ary[anim_index]}`, {
-    fontFamily: "Arial",
-    fontSize: 24,
-    fill: 0x33ccff,
-    align: "center",
-    fontWeight: "bold",
-    strokeThickness: 4,
-    dropShadow: false,
-    dropShadowColor: "#666666",
-    lineJoin: "round"
-  });
+let playAnimation = () => {
+  let message: string = "animation: " + anim_ary[anim_index];
+  text3 = setText(
+    message,
+    "Arial",
+    24,
+    0x33ccff,
+    "center",
+    "bold",
+    "#000000",
+    4,
+    false,
+    "#666666"
+  );
+
   container.addChild(text3);
   text3.x = WIDTH - text3.width - 10;
   text3.y = 10;
 
   spine.state.setAnimation(0, anim_ary[anim_index], false);
   anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
-}
+};
+
+let setText = (
+  message: string,
+  fontfamily: string = "Arial",
+  fontsize = 12,
+  fill = 0xffffff,
+  align = "left",
+  fontweight = "normal",
+  strokec = "#000000",
+  sthickness = 0,
+  shadow = false,
+  shadowc = "#000000"
+) => {
+  return new PIXI.Text(`${message}`, {
+    fontFamily: fontfamily,
+    fontSize: fontsize,
+    fill: fill,
+    align: align,
+    fontWeight: fontweight,
+    stroke: strokec,
+    strokeThickness: sthickness,
+    dropShadow: shadow,
+    dropShadowColor: shadowc,
+    lineJoin: "round"
+  });
+};
