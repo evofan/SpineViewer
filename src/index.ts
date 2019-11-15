@@ -3,12 +3,12 @@ import { loader } from "webpack";
 window.PIXI = PIXI;
 import "pixi-spine";
 
-console.log(PIXI); // Module {…}
+console.log(PIXI);
 
 // init
 const WIDTH: number = 720;
 const HEIGHT: number = 480;
-const app: any = new PIXI.Application({
+const app: PIXI.Application = new PIXI.Application({
   width: WIDTH,
   height: HEIGHT
 });
@@ -23,21 +23,27 @@ const anim_length: number = anim_ary.length;
 let anim_index: number = 0;
 
 // container
-let container: any = new PIXI.Container();
+let container: PIXI.Container = new PIXI.Container();
 container.width = WIDTH;
 container.height = HEIGHT;
 container.x = 0;
 container.y = 0;
 container.pivot.x = 0;
 container.pivot.y = 0;
-container.interactive = true;
+// container.interactive = true;
+// container.buttonMode = true;
+// container.isSprite = true;
+// container.interactiveChildren = true;
 app.stage.addChild(container);
+console.log(container);
 
 // bg
 let bg: PIXI.Sprite;
 
-// text 1-3
-let text: PIXI.Text, text2: PIXI.Text, text3: PIXI.Text;
+// texts
+let text_libVersion: PIXI.Text,
+  text_userMessage: PIXI.Text,
+  text_animationName: PIXI.Text;
 
 // loader
 app.loader
@@ -49,20 +55,29 @@ app.loader
 
     // bg
     bg = new PIXI.Sprite(resources.bg.texture);
+    bg.interactive = true;
+    bg.buttonMode = true;
     container.addChild(bg);
+    bg.on("pointerdown", onClick);
+    // - Pointers normalize touch and mouse -
+    // sprite.on('pointerdown', onClick);
+    //
+    // - Alternatively, use the mouse & touch events: -
+    // sprite.on('click', onClick); // mouse-only
+    // sprite.on('tap', onClick); // touch-only
 
     // text
-    let message: string =
+    let version: string =
       "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
-    text = setText(message, "Arial", 24, 0xf0fff0, "left", "bold");
-    container.addChild(text);
-    text.x = 10;
-    text.y = 10;
+    text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
+    container.addChild(text_libVersion);
+    text_libVersion.x = 10;
+    text_libVersion.y = 10;
 
-    // text2
-    let message2: string = "Touch the Alien !";
-    text2 = setText(
-      message2,
+    // text_userMessage
+    let usermessage: string = "Touch the Stage !";
+    text_userMessage = setText(
+      usermessage,
       "Arial",
       24,
       0xff0033,
@@ -71,47 +86,49 @@ app.loader
       "#000000",
       5,
       false
-      // "#666666"
     );
-    container.addChild(text2);
-    text2.x = WIDTH / 2 - text2.width / 2;
-    text2.y = 420;
+    container.addChild(text_userMessage);
+    text_userMessage.x = WIDTH / 2 - text_userMessage.width / 2;
+    text_userMessage.y = HEIGHT - text_userMessage.height - 10;
 
     // spine
     spine = new PIXI.spine.Spine(resources.spineCharacter.spineData);
-    console.log(spine); // 01_hone = width: 0と出るので？3.7だと3.7用のpixi-spine使う？
+    console.log(spine);
     spine.x = WIDTH / 2;
     spine.y = HEIGHT / 2 + offsetY;
     container.addChild(spine);
-
-    container.click = () => {
-      console.log("clicked alien");
-      if (text3) {
-        text3.text = "";
-        container.removeChild(text3);
-      }
-      playAnimation();
-    };
-
-    container.tap = () => {
-      console.log("tapped alien");
-      if (text3) {
-        text3.text = "";
-        container.removeChild(text3);
-      }
-      playAnimation();
-    };
 
     // app.start();
   });
 
 /**
+ * Callback when the background is pressed
+ * @param { MouseEvent } e
+ */
+let onClick = (e: MouseEvent) => {
+  console.log("onClick(): ", e);
+  if (text_animationName) {
+    clearText(text_animationName);
+  }
+  playAnimation();
+};
+
+/**
+ * Remeove text_animationName
+ * @param { PIXI.Text } targetText
+ */
+let clearText = (targetText: PIXI.Text) => {
+  targetText.text = "";
+  container.removeChild(targetText);
+};
+
+/**
  * Change & Play Alien Animation.
  */
 let playAnimation = () => {
-  let message: string = "animation: " + anim_ary[anim_index];
-  text3 = setText(
-    message,
+  let animation: string = "animation: " + anim_ary[anim_index];
+  text_animationName = setText(
+    animation,
     "Arial",
     24,
     0x33ccff,
@@ -123,9 +140,9 @@ let playAnimation = () => {
     "#666666"
   );
 
-  container.addChild(text3);
-  text3.x = WIDTH - text3.width - 10;
-  text3.y = 10;
+  container.addChild(text_animationName);
+  text_animationName.x = WIDTH - text_animationName.width - 10;
+  text_animationName.y = 10;
 
   spine.state.setAnimation(0, anim_ary[anim_index], false);
   anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
@@ -134,14 +151,14 @@ let playAnimation = () => {
 let setText = (
   message: string,
   fontfamily: string = "Arial",
-  fontsize = 12,
-  fill = 0xffffff,
-  align = "left",
-  fontweight = "normal",
-  strokec = "#000000",
-  sthickness = 0,
-  shadow = false,
-  shadowc = "#000000"
+  fontsize: number = 12,
+  fill: number = 0xffffff,
+  align: string = "left",
+  fontweight: string = "normal",
+  strokecolor: string = "#000000",
+  sthickness: number = 0,
+  isShadow: boolean = false,
+  shadowcolor: string = "#000000"
 ) => {
   return new PIXI.Text(`${message}`, {
     fontFamily: fontfamily,
@@ -149,10 +166,10 @@ let setText = (
     fill: fill,
     align: align,
     fontWeight: fontweight,
-    stroke: strokec,
+    stroke: strokecolor,
     strokeThickness: sthickness,
-    dropShadow: shadow,
-    dropShadowColor: shadowc,
+    dropShadow: isShadow,
+    dropShadowColor: shadowcolor,
     lineJoin: "round"
   });
 };
