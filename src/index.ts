@@ -8,17 +8,37 @@ console.log(PIXI);
 // init
 const WIDTH: number = 720;
 const HEIGHT: number = 480;
+const BG_COLOR: number = 0x000000;
 const app: PIXI.Application = new PIXI.Application({
   width: WIDTH,
-  height: HEIGHT
+  height: HEIGHT,
+  forceCanvas: false
 });
+app.renderer.backgroundColor = BG_COLOR;
 document.body.appendChild(app.view);
 
+// asset
+const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
+// const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json";
+const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // your spine animation
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 140;
 let spine: PIXI.spine.Spine;
 
-const anim_ary: string[] = ["death", "hit", "jump", "run"];
+// const anim_ary: string[] = ["death", "hit", "jump", "run"]; // TODO: Auto detect and make button
+const anim_ary: string[] = [ // your spine animation name
+  "aim",
+  "death",
+  "hoverboard",
+  "idle",
+  "idle-turn",
+  "jump",
+  "portal",
+  "run",
+  "run-to-idle",
+  "shoot",
+  "walk"
+];
 const anim_length: number = anim_ary.length;
 let anim_index: number = 0;
 
@@ -43,13 +63,19 @@ let bg: PIXI.Sprite;
 // texts
 let text_libVersion: PIXI.Text,
   text_userMessage: PIXI.Text,
-  text_animationName: PIXI.Text;
+  text_animationName: PIXI.Text,
+  text_error: PIXI.Text;
+
+if (!ASSET_BG || ASSET_BG === null || typeof ASSET_BG === "undefined") {
+  // console.log("background image error");
+  // throw Error("Unable to load image ...");
+  console.log("Do not use background image.");
+}
 
 // loader
 app.loader
-  .add("bg", "assets/bg/pic_bg.jpg")
-  .add("spineCharacter", "assets/alien/export/alien.json", spineLoaderOptions) // spine ver. 3.8
-  // .add("spineCharacter", "assets/01_hone.json") // spine ver. 3.7
+  .add("bg", ASSET_BG)
+  .add("spineCharacter", ASSET_SPINE1, spineLoaderOptions) // spine ver. 3.8
   .load(function(loader: PIXI.Loader, resources: any) {
     console.log(loader);
 
@@ -101,6 +127,22 @@ app.loader
     // app.start();
   });
 
+app.loader.onError.add(() => {
+  displayError();
+  throw Error("load error ...");
+});
+
+/**
+ * dislpay Asset Loading Error
+ */
+let displayError = () => {
+  let error_message: string = "Asset Loading Error ...";
+  text_error = setText(error_message, "Arial", 24, 0xff0000, "center", "bold");
+  container.addChild(text_error);
+  text_error.x = WIDTH / 2 - text_error.width / 2;
+  text_error.y = HEIGHT / 2 - text_error.height / 2;
+};
+
 /**
  * Callback when the background is pressed
  * @param { MouseEvent } e
@@ -117,9 +159,9 @@ let onClick = (e: MouseEvent) => {
  * Remeove text_animationName
  * @param { PIXI.Text } targetText
  */
-let clearText = (targetText: PIXI.Text) => {
-  targetText.text = "";
-  container.removeChild(targetText);
+let clearText = (target: PIXI.Text) => {
+  target.text = "";
+  container.removeChild(target);
 };
 
 /**
@@ -139,12 +181,11 @@ let playAnimation = () => {
     false,
     "#666666"
   );
-
   container.addChild(text_animationName);
   text_animationName.x = WIDTH - text_animationName.width - 10;
   text_animationName.y = 10;
 
-  spine.state.setAnimation(0, anim_ary[anim_index], false);
+  spine.state.setAnimation(0, anim_ary[anim_index], false); // TODO: can loop 'true' toggle
   anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
 };
 
