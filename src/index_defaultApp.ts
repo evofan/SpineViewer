@@ -9,9 +9,6 @@ console.log(PIXI);
 const WIDTH: number = 720;
 const HEIGHT: number = 480;
 const BG_COLOR: number = 0x000000;
-
-/*
-// old way
 const app: PIXI.Application = new PIXI.Application({
   width: WIDTH,
   height: HEIGHT,
@@ -19,28 +16,6 @@ const app: PIXI.Application = new PIXI.Application({
   backgroundColor: BG_COLOR
 });
 document.body.appendChild(app.view);
-*/
-
-// renderer
-let renderer: PIXI.Renderer = new PIXI.Renderer({
-  width: WIDTH,
-  height: HEIGHT,
-  backgroundColor: BG_COLOR
-});
-document.body.appendChild(renderer.view);
-
-// stage
-let stage: PIXI.Container = new PIXI.Container();
-
-// ticker
-let ticker: PIXI.Ticker = new PIXI.Ticker();
-ticker.add(() => {
-  renderer.render(stage);
-}, PIXI.UPDATE_PRIORITY.LOW);
-ticker.start();
-
-// loader
-let loader: PIXI.Loader = new PIXI.Loader();
 
 // asset
 const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
@@ -51,8 +26,7 @@ const offsetY: number = 140;
 let spine: PIXI.spine.Spine;
 
 // const anim_ary: string[] = ["death", "hit", "jump", "run"]; // TODO: Auto detect and make button
-const anim_ary: string[] = [
-  // your spine animation name
+const anim_ary: string[] = [ // your spine animation name
   "aim",
   "death",
   "hoverboard",
@@ -80,7 +54,7 @@ container.pivot.y = 0;
 // container.buttonMode = true;
 // container.isSprite = true;
 // container.interactiveChildren = true;
-stage.addChild(container);
+app.stage.addChild(container);
 console.log(container);
 
 // bg
@@ -99,7 +73,7 @@ if (!ASSET_BG || ASSET_BG === null || typeof ASSET_BG === "undefined") {
 }
 
 // loader
-loader
+app.loader
   .add("bg", ASSET_BG)
   .add("spineCharacter", ASSET_SPINE1, spineLoaderOptions) // spine ver. 3.8
   .load(function(loader: PIXI.Loader, resources: any) {
@@ -149,9 +123,11 @@ loader
     spine.x = WIDTH / 2;
     spine.y = HEIGHT / 2 + offsetY;
     container.addChild(spine);
+
+    // app.start();
   });
 
-loader.onError.add(() => {
+app.loader.onError.add(() => {
   displayError();
   throw Error("load error ...");
 });
@@ -213,26 +189,11 @@ let playAnimation = () => {
   anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
 };
 
-/**
- * Set Text on TextField
- * @param { string } message
- * @param { string } fontfamily
- * @param { number } fontsize
- * @param { number } fillcolor
- * @param { string } align
- * @param { number } fontweight
- * @param { string } strokecolor
- * @param { number } sthickness
- * @param { boolean } isShadow
- * @param { string } shadowcolor
- *
- * @returns { object } PIXI.Text
- */
 let setText = (
   message: string,
   fontfamily: string = "Arial",
   fontsize: number = 12,
-  fillcolor: number = 0xffffff,
+  fill: number = 0xffffff,
   align: string = "left",
   fontweight: string = "normal",
   strokecolor: string = "#000000",
@@ -243,7 +204,7 @@ let setText = (
   return new PIXI.Text(`${message}`, {
     fontFamily: fontfamily,
     fontSize: fontsize,
-    fill: fillcolor,
+    fill: fill,
     align: align,
     fontWeight: fontweight,
     stroke: strokecolor,
