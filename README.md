@@ -37,4 +37,8 @@ TypeScript environment construction.
 プロジェクトで使用するバージョンの統一と、可能ならバージョン別に元ファイルを保存しておく）  
 
 **Spine editor and runtime version management**  
-[http://ja.esotericsoftware.com/forum/Spine-editor-and-runtime-version-management-6534](http://ja.esotericsoftware.com/forum/Spine-editor-and-runtime-version-management-6534) 
+[http://ja.esotericsoftware.com/forum/Spine-editor-and-runtime-version-management-6534](http://ja.esotericsoftware.com/forum/Spine-editor-and-runtime-version-management-6534)  
+
+**v5 Custom Application GameLoop**  
+[https://github.com/pixijs/pixi.js/wiki/v5-Custom-Application-GameLoop](https://github.com/pixijs/pixi.js/wiki/v5-Custom-Application-GameLoop)  
+make their own application class and gameloop.
