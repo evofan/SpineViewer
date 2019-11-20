@@ -41,4 +41,7 @@ TypeScript environment construction.
 
 **v5 Custom Application GameLoop**  
 [https://github.com/pixijs/pixi.js/wiki/v5-Custom-Application-GameLoop](https://github.com/pixijs/pixi.js/wiki/v5-Custom-Application-GameLoop)  
-make their own application class and gameloop.
+make their own application class and gameloop.  
+
+**PIXI.Loader**  
+[https://pixijs.download/dev/docs/PIXI.Loader.html](https://pixijs.download/dev/docs/PIXI.Loader.html)  
