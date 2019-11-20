@@ -45,3 +45,6 @@ make their own application class and gameloop.
 
 **PIXI.Loader**  
 [https://pixijs.download/dev/docs/PIXI.Loader.html](https://pixijs.download/dev/docs/PIXI.Loader.html)  
+
+**Spine Demo(sample)**  
+[http://ja.esotericsoftware.com/spine-demos](http://ja.esotericsoftware.com/spine-demos)  
