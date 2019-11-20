@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { loader } from "webpack";
+import { loader, IgnorePlugin } from "webpack";
 window.PIXI = PIXI;
 import "pixi-spine";
 
@@ -32,20 +32,49 @@ document.body.appendChild(renderer.view);
 // stage
 let stage: PIXI.Container = new PIXI.Container();
 
+// Custom GameLoop(v5)
+// call requestAnimationFrame directly.
+let oldTime = Date.now();
+let ms = 1000;
+let fps = 60;
+let animate = () => {
+  // console.log("animate()");
+  let newTime = Date.now();
+  let deltaTime = newTime - oldTime;
+  oldTime = newTime;
+  if (deltaTime < 0) {
+    deltaTime = 0;
+  }
+  if (deltaTime > ms) {
+    deltaTime = ms;
+  }
+  let deltaFrame = (deltaTime * fps) / ms;
+  // sprite.rotation += 0.1 * deltaFrame; // sample
+  moveStar(deltaFrame);
+
+  // update your game there
+  renderer.render(stage);
+  requestAnimationFrame(animate);
+};
+
 // ticker
+/*
 let ticker: PIXI.Ticker = new PIXI.Ticker();
 ticker.add(() => {
   renderer.render(stage);
 }, PIXI.UPDATE_PRIORITY.LOW);
 ticker.start();
+*/
 
 // loader
 let loader: PIXI.Loader = new PIXI.Loader();
 
 // asset
 const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
+const ASSET_STAR: string = "assets/images/pic_star.png"; // fps test
 // const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json";
 const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // your spine animation
+
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 140;
 let spine: PIXI.spine.Spine;
@@ -86,11 +115,15 @@ console.log(container);
 // bg
 let bg: PIXI.Sprite;
 
+// sprite
+let star: PIXI.Sprite;
+
 // texts
 let text_libVersion: PIXI.Text,
   text_userMessage: PIXI.Text,
   text_animationName: PIXI.Text,
-  text_error: PIXI.Text;
+  text_error: PIXI.Text,
+  text_fps: PIXI.Text;
 
 if (!ASSET_BG || ASSET_BG === null || typeof ASSET_BG === "undefined") {
   // console.log("background image error");
@@ -101,6 +134,7 @@ if (!ASSET_BG || ASSET_BG === null || typeof ASSET_BG === "undefined") {
 // loader
 loader
   .add("bg", ASSET_BG)
+  .add("star", ASSET_STAR)
   .add("spineCharacter", ASSET_SPINE1, spineLoaderOptions) // spine ver. 3.8
   .load(function(loader: PIXI.Loader, resources: any) {
     console.log(loader);
@@ -118,7 +152,15 @@ loader
     // sprite.on('click', onClick); // mouse-only
     // sprite.on('tap', onClick); // touch-only
 
-    // text
+    // star
+    star = new PIXI.Sprite(resources.star.texture);
+    container.addChild(star);
+    star.x = 10;
+    star.y = 410;
+    star.scale.x = star.scale.y = 0.5;
+    star.anchor.set(0.5);
+
+    // text_version
     let version: string =
       "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
     text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
@@ -143,12 +185,22 @@ loader
     text_userMessage.x = WIDTH / 2 - text_userMessage.width / 2;
     text_userMessage.y = HEIGHT - text_userMessage.height - 10;
 
+    // text_fps
+    text_fps = setText(fps, "Arial", 24, 0x00cc00, "right", "bold");
+    container.addChild(text_fps);
+    let offsetX = 10;
+    text_fps.x = WIDTH - text_fps.width -offsetX;
+    text_fps.y = 440;
+
     // spine
     spine = new PIXI.spine.Spine(resources.spineCharacter.spineData);
     console.log(spine);
     spine.x = WIDTH / 2;
     spine.y = HEIGHT / 2 + offsetY;
     container.addChild(spine);
+
+    // app start
+    requestAnimationFrame(animate);
   });
 
 loader.onError.add(() => {
@@ -215,7 +267,7 @@ let playAnimation = () => {
 
 /**
  * Set Text on TextField
- * @param { string } message
+ * @param { string | number } message
  * @param { string } fontfamily
  * @param { number } fontsize
  * @param { number } fillcolor
@@ -229,7 +281,7 @@ let playAnimation = () => {
  * @returns { object } PIXI.Text
  */
 let setText = (
-  message: string,
+  message: string | number,
   fontfamily: string = "Arial",
   fontsize: number = 12,
   fillcolor: number = 0xffffff,
@@ -252,4 +304,17 @@ let setText = (
     dropShadowColor: shadowcolor,
     lineJoin: "round"
   });
+};
+
+/**
+ * move star ... gameLoop(custom ticker) test
+ * @param { number } delta 
+ */
+let moveStar = (delta: number) => {
+  // console.log("moveStar()");
+  star.x += 1 * delta;
+  star.rotation += 0.01;
+  if (star.x >= WIDTH + star.width) {
+    star.x = -star.width;
+  }
 };
