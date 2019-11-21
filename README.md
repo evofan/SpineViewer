@@ -48,3 +48,6 @@ make their own application class and gameloop.
 
 **Spine Demo(sample)**  
 [http://ja.esotericsoftware.com/spine-demos](http://ja.esotericsoftware.com/spine-demos)  
+
+**webpackでhtmlファイルも出力する**  
+[https://ema-hiro.hatenablog.com/entry/2017/10/12/015748](https://ema-hiro.hatenablog.com/entry/2017/10/12/015748)  
