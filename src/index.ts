@@ -72,16 +72,19 @@ let loader: PIXI.Loader = new PIXI.Loader();
 // asset
 const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
 const ASSET_STAR: string = "assets/images/pic_star.png"; // fps test
+
 // const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json";
-const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // your spine animation
+// const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json";
+// const ASSET_SPINE1: string = "assets/spine/dragon/export/dragon.json";
+const ASSET_SPINE1: string = "assets/spine/powerup/export/powerup.json";
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
-const offsetY: number = 140;
+const offsetY: number = 0; // 140: spineboy, alien;
 let spine: PIXI.spine.Spine;
 
-// const anim_ary: string[] = ["death", "hit", "jump", "run"]; // TODO: Auto detect and make button
-const anim_ary: string[] = [
-  // your spine animation name
+// const anim_ary: string[] = ["death", "hit", "jump", "run"]; // Alien, TODO: Auto detect and make button
+/*
+const anim_ary: string[] = [ // spineboy
   "aim",
   "death",
   "hoverboard",
@@ -94,6 +97,10 @@ const anim_ary: string[] = [
   "shoot",
   "walk"
 ];
+*/
+// const anim_ary: string[] = ["flying"]; // dragon
+const anim_ary: string[] = ["bounce"]; // powerup
+
 const anim_length: number = anim_ary.length;
 let anim_index: number = 0;
 
@@ -189,7 +196,7 @@ loader
     text_fps = setText(fps, "Arial", 24, 0x00cc00, "right", "bold");
     container.addChild(text_fps);
     let offsetX = 10;
-    text_fps.x = WIDTH - text_fps.width -offsetX;
+    text_fps.x = WIDTH - text_fps.width - offsetX;
     text_fps.y = 440;
 
     // spine
@@ -197,6 +204,9 @@ loader
     console.log(spine);
     spine.x = WIDTH / 2;
     spine.y = HEIGHT / 2 + offsetY;
+    // spine.scale.x = spine.scale.y = 0.5; // other
+    spine.scale.x = spine.scale.y = 1.5; // powerup
+    spine.y = 350; // powerup
     container.addChild(spine);
 
     // app start
@@ -242,6 +252,7 @@ let clearText = (target: PIXI.Text) => {
 
 /**
  * Change & Play Alien Animation.
+ * @TODO: get animation end callback and clearIndex
  */
 let playAnimation = () => {
   let animation: string = "animation: " + anim_ary[anim_index];
@@ -308,7 +319,7 @@ let setText = (
 
 /**
  * move star ... gameLoop(custom ticker) test
- * @param { number } delta 
+ * @param { number } delta
  */
 let moveStar = (delta: number) => {
   // console.log("moveStar()");

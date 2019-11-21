@@ -10,7 +10,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Pixi.js Demo"
+      // title: "Pixi.js Demo",
+      template: "./src/html/index.html"
     }),
     new CopyPlugin([{ from: "src/assets", to: "assets" }])
   ],
