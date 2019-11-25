@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import { loader, IgnorePlugin } from "webpack";
 window.PIXI = PIXI;
 import "pixi-spine";
+import { kMaxLength } from "buffer";
 
 console.log(PIXI);
 
@@ -73,16 +74,16 @@ let loader: PIXI.Loader = new PIXI.Loader();
 const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
 const ASSET_STAR: string = "assets/images/pic_star.png"; // fps test
 
-// const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json";
-// const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json";
-// const ASSET_SPINE1: string = "assets/spine/dragon/export/dragon.json";
-const ASSET_SPINE1: string = "assets/spine/powerup/export/powerup.json";
+const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json"; // aline
+// const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // spineboy
+// const ASSET_SPINE1: string = "assets/spine/dragon/export/dragon.json"; // dragon
+// const ASSET_SPINE1: string = "assets/spine/powerup/export/powerup.json"; // powerup
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 0; // 140: spineboy, alien;
-let spine: PIXI.spine.Spine;
+let spineObj1: PIXI.spine.Spine;
 
-// const anim_ary: string[] = ["death", "hit", "jump", "run"]; // Alien, TODO: Auto detect and make button
+const anim_ary: string[] = ["death", "hit", "jump", "run"]; // Alien, TODO: Auto detect and make button
 /*
 const anim_ary: string[] = [ // spineboy
   "aim",
@@ -99,7 +100,7 @@ const anim_ary: string[] = [ // spineboy
 ];
 */
 // const anim_ary: string[] = ["flying"]; // dragon
-const anim_ary: string[] = ["bounce"]; // powerup
+// const anim_ary: string[] = ["bounce"]; // powerup
 
 const anim_length: number = anim_ary.length;
 let anim_index: number = 0;
@@ -151,7 +152,7 @@ loader
     bg.interactive = true;
     bg.buttonMode = true;
     container.addChild(bg);
-    bg.on("pointerdown", onClick);
+    // bg.on("pointerdown", onlick);
     // - Pointers normalize touch and mouse -
     // sprite.on('pointerdown', onClick);
     //
@@ -176,7 +177,7 @@ loader
     text_libVersion.y = 10;
 
     // text_userMessage
-    let usermessage: string = "Touch the Stage !";
+    let usermessage: string = "Touch the Button ↓";
     text_userMessage = setText(
       usermessage,
       "Arial",
@@ -200,14 +201,14 @@ loader
     text_fps.y = 440;
 
     // spine
-    spine = new PIXI.spine.Spine(resources.spineCharacter.spineData);
-    console.log(spine);
-    spine.x = WIDTH / 2;
-    spine.y = HEIGHT / 2 + offsetY;
+    spineObj1 = new PIXI.spine.Spine(resources.spineCharacter.spineData);
+    console.log(spineObj1);
+    spineObj1.x = WIDTH / 2;
+    spineObj1.y = HEIGHT / 2 + offsetY;
     // spine.scale.x = spine.scale.y = 0.5; // other
-    spine.scale.x = spine.scale.y = 1.5; // powerup
-    spine.y = 350; // powerup
-    container.addChild(spine);
+    spineObj1.scale.x = spineObj1.scale.y = 1.5; // powerup
+    spineObj1.y = 350; // powerup
+    container.addChild(spineObj1);
 
     // app start
     requestAnimationFrame(animate);
@@ -233,6 +234,7 @@ let displayError = () => {
  * Callback when the background is pressed
  * @param { MouseEvent } e
  */
+/*
 let onClick = (e: MouseEvent) => {
   console.log("onClick(): ", e);
   if (text_animationName) {
@@ -240,13 +242,15 @@ let onClick = (e: MouseEvent) => {
   }
   playAnimation();
 };
+*/
 
 /**
  * Remeove text_animationName
  * @param { PIXI.Text } targetText
  */
 let clearText = (target: PIXI.Text) => {
-  target.text = "";
+  console.log("targer: ", target);
+  target.text = "あ";
   container.removeChild(target);
 };
 
@@ -254,8 +258,8 @@ let clearText = (target: PIXI.Text) => {
  * Change & Play Alien Animation.
  * @TODO: get animation end callback and clearIndex
  */
-let playAnimation = () => {
-  let animation: string = "animation: " + anim_ary[anim_index];
+let displayAnimeName = (num: number) => {
+  let animation: string = "animation: " + anim_ary[num];
   text_animationName = setText(
     animation,
     "Arial",
@@ -272,8 +276,8 @@ let playAnimation = () => {
   text_animationName.x = WIDTH - text_animationName.width - 10;
   text_animationName.y = 10;
 
-  spine.state.setAnimation(0, anim_ary[anim_index], false); // TODO: can loop 'true' toggle
-  anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
+  //spineObj1.state.setAnimation(0, anim_ary[anim_index], false); // TODO: can loop 'true' toggle
+  //anim_index >= anim_length - 1 ? (anim_index = 0) : anim_index++;
 };
 
 /**
@@ -329,3 +333,51 @@ let moveStar = (delta: number) => {
     star.x = -star.width;
   }
 };
+
+function playAnimation3(this: any, e: MouseEvent) {
+  console.log(event);
+  console.log(this.name);
+  let num: number = Number(this.name) - 1;
+  console.log("■num: ", num);
+  console.log("■typeof num: ", typeof num);
+  let animeLoop = false; // TODO: configurable
+  let animeObj: PIXI.spine.Spine = spineObj1; // `spineObj${num}`; TOGO: can adjust
+  let animeName = anim_ary[num];
+  console.log("■animeName: ", animeName);
+  if (animeName === "") {
+    console.log("there isn't animation name.");
+    return false;
+  }
+  // play anime
+  animeObj.state.setAnimation(0, animeName, animeLoop);
+  // clear text
+  if (text_animationName) {
+    clearText(text_animationName);
+  }
+  // show anime name text
+  displayAnimeName(num);
+}
+
+console.log("▲▲▲index.ts end");
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOMContentLoaded Completed");
+  let button: any;
+  let btStart: number = 1;
+  let btMaxLength: number = anim_length;
+
+  for (let i: number = btStart; i <= btMaxLength; i++) {
+    if (document.getElementById(`myButton${i}`)) {
+      console.log("myButton: ", i);
+      button = document.getElementById(`myButton${i}`);
+      if (button) {
+        let name: string = button.name;
+        button.addEventListener(
+          "click",
+          { name: name, handleEvent: playAnimation3, this: button },
+          false
+        );
+      }
+    }
+  }
+});

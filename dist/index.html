@@ -4,8 +4,38 @@
     <meta charset="utf-8" />
     <title>Pixi.js SpineViewer</title>
   </head>
-  <body>
+  <body id="list">
     <p>Spine Data Viewer</p>
-    <!--<button></button>-->
   <script type="text/javascript" src="main.js"></script></body>
+
+  <form>
+    <!--
+    <button type="button" onclick="playAnimation2(1, 1)"> Spine1 アニメ1再生</button>
+    <button type="button" onclick="playAnimation2(1, 2)"> Spine1 アニメ2再生</button>
+    <button type="button" onclick="playAnimation3()"> Spine1 アニメ3再生</button>
+    -->
+
+    <button type="button" id="myButton1" name="1">
+      Spine1 animation1[ death ] play
+    </button>
+    <button type="button" id="myButton2" name="2">
+      Spine1 animation2[ hit ] play
+    </button>
+    <button type="button" id="myButton3" name="3">
+      Spine1 animation3[ run ] play
+    </button>
+    <button type="button" id="myButton4" name="4">
+      Spine1 animation4[ jump ] play
+    </button>
+
+    <!--
+    &nbsp;
+    <button type="button" onclick="controlAnime(1, 'hide')"> Spine1 remove</button>
+    <button type="button" onclick="controlAnime(1, 'show')"> Spine1 (最前面に)出す</button>
+    -->
+  </form>
+
+  <script>
+    console.log("▲▲▲index.html end");
+  </script>
 </html>
