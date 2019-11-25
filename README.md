@@ -51,3 +51,6 @@ make their own application class and gameloop.
 
 **webpackでhtmlファイルも出力する**  
 [https://ema-hiro.hatenablog.com/entry/2017/10/12/015748](https://ema-hiro.hatenablog.com/entry/2017/10/12/015748)  
+
+**How to use spine events spine-ts way**  
+[https://github.com/pixijs/pixi-spine/blob/master/examples/spine_events.md](https://github.com/pixijs/pixi-spine/blob/master/examples/spine_events.md)  
