@@ -152,7 +152,7 @@ loader
     bg.interactive = true;
     bg.buttonMode = true;
     container.addChild(bg);
-    // bg.on("pointerdown", onlick);
+    bg.on("pointerdown", onClick); // ver.5
     // - Pointers normalize touch and mouse -
     // sprite.on('pointerdown', onClick);
     //
@@ -234,15 +234,9 @@ let displayError = () => {
  * Callback when the background is pressed
  * @param { MouseEvent } e
  */
-/*
 let onClick = (e: MouseEvent) => {
-  console.log("onClick(): ", e);
-  if (text_animationName) {
-    clearText(text_animationName);
-  }
-  playAnimation();
+  console.log("stage onClick(): ", e);
 };
-*/
 
 /**
  * Remeove text_animationName
