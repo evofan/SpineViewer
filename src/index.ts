@@ -4,12 +4,14 @@ window.PIXI = PIXI;
 import "pixi-spine";
 import { kMaxLength } from "buffer";
 
+import { STAGES, ASSETS } from "./Constants";
+
 console.log(PIXI);
 
 // init
-const WIDTH: number = 720;
-const HEIGHT: number = 480;
-const BG_COLOR: number = 0x000000;
+const WIDTH: number = STAGES.WIDTH;
+const HEIGHT: number = STAGES.HEIGHT;
+const BG_COLOR: number = STAGES.BG_COLOR;
 
 /*
 // old way
@@ -71,13 +73,13 @@ ticker.start();
 let loader: PIXI.Loader = new PIXI.Loader();
 
 // asset
-const ASSET_BG: string = "assets/images/pic_bg.jpg"; // your bakground image
-const ASSET_STAR: string = "assets/images/pic_star.png"; // fps test
+const ASSET_BG: string = ASSETS.ASSET_BG; // your bakground image
+const ASSET_STAR: string = ASSETS.ASSET_STAR; // fps test
 
-const ASSET_SPINE1: string = "assets/spine/alien/export/alien.json"; // aline
+const ASSET_SPINE1: string = ASSETS.ASSET_SPINE1; // aline
 // const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // spineboy
 // const ASSET_SPINE1: string = "assets/spine/dragon/export/dragon.json"; // dragon
-const ASSET_SPINE2: string = "assets/spine/powerup/export/powerup.json"; // powerup
+const ASSET_SPINE2: string = ASSETS.ASSET_SPINE2; // powerup
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 0; // 140: spineboy, alien;
@@ -253,8 +255,8 @@ let onClick = (e: MouseEvent) => {
  * @param { PIXI.Text } targetText
  */
 let clearText = (target: PIXI.Text) => {
-  console.log("targer: ", target);
-  target.text = "あ";
+  console.log("target: ", target);
+  target.text = "";
   container.removeChild(target);
 };
 
@@ -330,7 +332,6 @@ let setText = (
  * @param { number } delta
  */
 let moveStar = (delta: number) => {
-  // console.log("moveStar()");
   star.x += 1 * delta;
   star.rotation += 0.01;
   if (star.x >= WIDTH + star.width) {
@@ -339,8 +340,8 @@ let moveStar = (delta: number) => {
 };
 
 function playAnimation(this: any, e: MouseEvent) {
-  console.log(event);
-  console.log(this.name);
+  console.log(e); // MouseEvent {isTrusted: true, screenX: 2717, screenY: 614, clientX: 287, clientY: 444, …}
+  console.log(this); // {animNum1: "1", animNum2: "1", this: button#myButton1, handleEvent: ƒ}
   let num1: number = this.animNum1 - 1;
   let num2: number = this.animNum2 - 1;
 
