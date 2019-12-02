@@ -37,13 +37,13 @@ let stage: PIXI.Container = new PIXI.Container();
 
 // Custom GameLoop(v5)
 // call requestAnimationFrame directly.
-let oldTime = Date.now();
-let ms = 1000;
-let fps = 60;
+let oldTime: number = Date.now();
+let ms: number = 1000;
+let fps: number = 60;
 let animate = () => {
   // console.log("animate()");
-  let newTime = Date.now();
-  let deltaTime = newTime - oldTime;
+  let newTime: number = Date.now();
+  let deltaTime: number = newTime - oldTime;
   oldTime = newTime;
   if (deltaTime < 0) {
     deltaTime = 0;
@@ -51,7 +51,7 @@ let animate = () => {
   if (deltaTime > ms) {
     deltaTime = ms;
   }
-  let deltaFrame = (deltaTime * fps) / ms;
+  let deltaFrame: number = (deltaTime * fps) / ms;
   // sprite.rotation += 0.1 * deltaFrame; // sample
   moveStar(deltaFrame);
 
@@ -171,8 +171,7 @@ loader
     star.anchor.set(0.5);
 
     // text_version
-    let version: string =
-      "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    let version: string = "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
     text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
     container.addChild(text_libVersion);
     text_libVersion.x = 10;
@@ -198,7 +197,7 @@ loader
     // text_fps
     text_fps = setText(fps, "Arial", 24, 0x00cc00, "right", "bold");
     container.addChild(text_fps);
-    let offsetX = 10;
+    let offsetX: number = 10;
     text_fps.x = WIDTH - text_fps.width - offsetX;
     text_fps.y = 440;
 
@@ -345,7 +344,7 @@ function playAnimation(this: any, e: MouseEvent) {
   let num1: number = this.animNum1 - 1;
   let num2: number = this.animNum2 - 1;
 
-  let animeLoop = false; // TODO: configurable
+  let animeLoop: boolean = false; // TODO: configurable
   let animeObj: PIXI.spine.Spine = spineObj[num1];
   let animeName: string = anim_ary[num1][num2];
 
