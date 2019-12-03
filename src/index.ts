@@ -4,7 +4,10 @@ window.PIXI = PIXI;
 import "pixi-spine";
 import { kMaxLength } from "buffer";
 
-import { STAGES, ASSETS } from "./Constants";
+import { STAGES, ASSETS } from "./constants";
+
+import { TEST } from "./jsonParser";
+TEST.temp(); // jsonParser.temp()
 
 console.log(PIXI);
 
@@ -80,6 +83,30 @@ const ASSET_SPINE1: string = ASSETS.ASSET_SPINE1; // aline
 // const ASSET_SPINE1: string = "assets/spine/spineboy/export/spineboy.json"; // spineboy
 // const ASSET_SPINE1: string = "assets/spine/dragon/export/dragon.json"; // dragon
 const ASSET_SPINE2: string = ASSETS.ASSET_SPINE2; // powerup
+
+const SPINEOBJ_NUM = ASSETS.ASSET_SPINE_NUM; // use spine animation
+
+// let test2 = TEST.parser(ASSET_SPINE1); // VM2217:1 Uncaught SyntaxError: Unexpected token a in JSON at position 0
+// console.log(test2);
+
+// let test2b = JSON.parse(ASSET_SPINE1);
+// console.log(test2b);
+
+// const ASSET_SPINE1b: any = JSON.parse(ASSETS.ASSET_SPINE1);
+// console.log("res: ", ASSET_SPINE1b.response)
+
+// 既にオブジェクト？
+
+// json load test
+let req = new XMLHttpRequest();
+req.addEventListener(
+  "load", () => {
+    let jsonObj: JSON = req.response;
+    console.log(jsonObj); // {skeleton: {…}, bones: Array(28), slots: Array(23), transform: Array(3), skins: Array(1), …}
+  }, false);
+req.open("GET", ASSET_SPINE1, true);
+req.responseType = "json";
+req.send(null);
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 0; // 140: spineboy, alien;
@@ -171,7 +198,8 @@ loader
     star.anchor.set(0.5);
 
     // text_version
-    let version: string = "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    let version: string =
+      "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
     text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
     container.addChild(text_libVersion);
     text_libVersion.x = 10;
