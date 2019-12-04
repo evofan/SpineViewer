@@ -98,15 +98,34 @@ const SPINEOBJ_NUM = ASSETS.ASSET_SPINE_NUM; // use spine animation
 // 既にオブジェクト？
 
 // json load test
+let jsonObj: any;
 let req = new XMLHttpRequest();
 req.addEventListener(
   "load", () => {
-    let jsonObj: JSON = req.response;
+    jsonObj = req.response;
     console.log(jsonObj); // {skeleton: {…}, bones: Array(28), slots: Array(23), transform: Array(3), skins: Array(1), …}
+
+    // get Animation name
+    let names: string[] = [];
+
+    console.log(jsonObj.animations); // {death: {…}, hit: {…}, jump: {…}, run: {…}}
+
+    // Get animation name by key name
+    Object.keys(jsonObj.animations).forEach((ele, idx) => {
+      console.log(ele); // death, hit, jump, run
+      console.log(idx); // 0, 1, 2, 3
+      names.push(ele);
+    })
+
+    console.log("animation names: ", names);// 0: "death", 1: "hit", 2: "jump", 3: "run"
+
+    // TODO: make button by ↑ animation name
+
   }, false);
 req.open("GET", ASSET_SPINE1, true);
 req.responseType = "json";
 req.send(null);
+
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 0; // 140: spineboy, alien;
