@@ -54,3 +54,6 @@ make their own application class and gameloop.
 
 **How to use spine events spine-ts way**  
 [https://github.com/pixijs/pixi-spine/blob/master/examples/spine_events.md](https://github.com/pixijs/pixi-spine/blob/master/examples/spine_events.md)  
+
+**TypeScriptでDOM要素を作成する**  
+[https://confrage.jp/typescript%E3%81%A7dom%E8%A6%81%E7%B4%A0%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/](https://confrage.jp/typescript%E3%81%A7dom%E8%A6%81%E7%B4%A0%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/)  
