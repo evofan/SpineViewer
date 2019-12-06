@@ -119,6 +119,23 @@ req.addEventListener(
 
     console.log("animation names: ", names);// 0: "death", 1: "hit", 2: "jump", 3: "run"
 
+    /*
+    let newDiv = document.createElement("div");
+    let newContent = document.createTextNode(`${names}`);
+    newDiv.appendChild(newContent);
+
+    let referenceDiv = document.getElementById("referencePoint");
+    let parentDiv = referenceDiv.parentNode;
+    parentDiv.insertBefore(newDiv, referenceDiv); 
+    */
+
+   const button:HTMLButtonElement = <HTMLButtonElement>document.createElement('referencePoint');
+   button.textContent = "[button]" + `${names}`;
+   button.onclick = function() {
+     alert('yes');
+   }
+   document.body.appendChild(button);
+
     // TODO: make button by ↑ animation name
 
   }, false);
