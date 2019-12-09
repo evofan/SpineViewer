@@ -57,3 +57,9 @@ make their own application class and gameloop.
 
 **TypeScriptでDOM要素を作成する**  
 [https://confrage.jp/typescript%E3%81%A7dom%E8%A6%81%E7%B4%A0%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/](https://confrage.jp/typescript%E3%81%A7dom%E8%A6%81%E7%B4%A0%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/)  
+  
+**GitHubから通知が来た：依存関係の1つに潜在的なセキュリティ脆弱性があります**  
+[https://www.l08084.com/entry/2018/04/22/162130](https://www.l08084.com/entry/2018/04/22/162130)  
+↑で直らず（Pixiのバージョンは上がった）
+>npm install serialize-javascript  
+serialize-javascript@1.9.1 -> 2.1.2で警告消失  
