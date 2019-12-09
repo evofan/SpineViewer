@@ -85,6 +85,7 @@ const ASSET_SPINE1: string = ASSETS.ASSET_SPINE1; // aline
 const ASSET_SPINE2: string = ASSETS.ASSET_SPINE2; // powerup
 
 const SPINEOBJ_NUM = ASSETS.ASSET_SPINE_NUM; // use spine animation
+// ↑この数だけループしてアニメーションを取得
 
 // let test2 = TEST.parser(ASSET_SPINE1); // VM2217:1 Uncaught SyntaxError: Unexpected token a in JSON at position 0
 // console.log(test2);
@@ -101,7 +102,8 @@ const SPINEOBJ_NUM = ASSETS.ASSET_SPINE_NUM; // use spine animation
 let jsonObj: any;
 let req = new XMLHttpRequest();
 req.addEventListener(
-  "load", () => {
+  "load",
+  () => {
     jsonObj = req.response;
     console.log(jsonObj); // {skeleton: {…}, bones: Array(28), slots: Array(23), transform: Array(3), skins: Array(1), …}
 
@@ -115,9 +117,9 @@ req.addEventListener(
       console.log(ele); // death, hit, jump, run
       console.log(idx); // 0, 1, 2, 3
       names.push(ele);
-    })
+    });
 
-    console.log("animation names: ", names);// 0: "death", 1: "hit", 2: "jump", 3: "run"
+    console.log("animation names: ", names); // 0: "death", 1: "hit", 2: "jump", 3: "run"
 
     /*
     let newDiv = document.createElement("div");
@@ -129,20 +131,50 @@ req.addEventListener(
     parentDiv.insertBefore(newDiv, referenceDiv); 
     */
 
+    /*
    const button:HTMLButtonElement = <HTMLButtonElement>document.createElement('referencePoint');
    button.textContent = "[button]" + `${names}`;
    button.onclick = function() {
      alert('yes');
    }
    document.body.appendChild(button);
+   */
+
+    let leng: number = names.length;
+    for (let i: number = 0; i < leng; i++) {
+      let button: HTMLButtonElement = <HTMLButtonElement>(
+        document.createElement("button")
+      );
+      button.textContent = `${names[i]}`;
+      button.onclick = function() {
+        // alert('yes');
+        let animeObj = { animNum1: 0, animNum2: i }; // dummy
+        playAnimation2(animeObj);
+      };
+      document.body.appendChild(button);
+      let divider: HTMLElement = <HTMLElement>document.createElement("span");
+      divider.textContent = " ";
+      document.body.appendChild(divider);
+      if (i === leng - 1) {
+        let newLine: HTMLElement = <HTMLElement>document.createElement("br");
+        document.body.appendChild(newLine);
+      }
+    }
+
+    let test: HTMLElement = <HTMLElement>document.createElement("span");
+    test.textContent = "test";
+    document.body.appendChild(test);
+
+    // let divider =" | ";
+    // document.body.appendChild(divider);
 
     // TODO: make button by ↑ animation name
-
-  }, false);
+  },
+  false
+);
 req.open("GET", ASSET_SPINE1, true);
 req.responseType = "json";
 req.send(null);
-
 
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 const offsetY: number = 0; // 140: spineboy, alien;
@@ -459,3 +491,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+function playAnimation2(obj: any) {
+  console.log("playAnimation2()", obj);
+  let num1: number = obj.animNum1;
+  let num2: number = obj.animNum2;
+
+  let animeLoop: boolean = false; // TODO: configurable
+  let animeObj: PIXI.spine.Spine = spineObj[num1];
+  let animeName: string = anim_ary[num1][num2];
+
+  if (animeName === "") {
+    console.log("there isn't animation name.");
+    return false;
+  }
+
+  // play anime
+  animeObj.state.setAnimation(0, animeName, animeLoop);
+
+  // clear text
+  if (text_animationName) {
+    clearText(text_animationName);
+  }
+  // show anime name text
+  displayAnimeName(num1, num2);
+}
