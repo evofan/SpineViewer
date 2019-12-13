@@ -28,7 +28,7 @@ document.body.appendChild(app.view);
 */
 
 // renderer
-let renderer: PIXI.Renderer = new PIXI.Renderer({
+const renderer: PIXI.Renderer = new PIXI.Renderer({
   width: WIDTH,
   height: HEIGHT,
   backgroundColor: BG_COLOR
@@ -36,7 +36,7 @@ let renderer: PIXI.Renderer = new PIXI.Renderer({
 document.body.appendChild(renderer.view);
 
 // stage
-let stage: PIXI.Container = new PIXI.Container();
+const stage: PIXI.Container = new PIXI.Container();
 
 // Custom GameLoop(v5)
 // call requestAnimationFrame directly.
@@ -99,13 +99,13 @@ const SPINEOBJ_NUM = ASSETS.ASSET_SPINE_NUM; // use spine animation
 // 既にオブジェクト？
 
 // json load test
-let jsonObj: any;
+let jsonObj: { [s: string]: string };
 let req = new XMLHttpRequest();
 req.addEventListener(
   "load",
   () => {
     jsonObj = req.response;
-    console.log(jsonObj); // {skeleton: {…}, bones: Array(28), slots: Array(23), transform: Array(3), skins: Array(1), …}
+    console.log("jsonObj: ", jsonObj); // {skeleton: {…}, bones: Array(28), slots: Array(23), transform: Array(3), skins: Array(1), …}
 
     // get Animation name
     let names: string[] = [];
@@ -142,13 +142,10 @@ req.addEventListener(
 
     let leng: number = names.length;
     for (let i: number = 0; i < leng; i++) {
-      let button: HTMLButtonElement = <HTMLButtonElement>(
-        document.createElement("button")
-      );
+      let button: HTMLButtonElement = <HTMLButtonElement>document.createElement("button");
       button.textContent = `${names[i]}`;
       button.onclick = function() {
-        // alert('yes');
-        let animeObj = { animNum1: 0, animNum2: i }; // dummy
+        let animeObj: { [s: string]: number } = { animNum1: 0, animNum2: i }; // dummy
         playAnimation2(animeObj);
       };
       document.body.appendChild(button);
@@ -241,8 +238,9 @@ loader
   .add("star", ASSET_STAR)
   .add("spineCharacter1", ASSET_SPINE1, spineLoaderOptions) // spine ver. 3.8
   .add("spineCharacter2", ASSET_SPINE2, spineLoaderOptions) // spine ver. 3.8
-  .load(function(loader: PIXI.Loader, resources: any) {
+  .load((loader: PIXI.Loader, resources: any) => {
     console.log(loader);
+    console.log(resources);
 
     // bg
     bg = new PIXI.Sprite(resources.bg.texture);
@@ -266,8 +264,7 @@ loader
     star.anchor.set(0.5);
 
     // text_version
-    let version: string =
-      "pixi-spine 2.1.4\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    let version: string = "pixi-spine 2.1.6\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
     text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
     container.addChild(text_libVersion);
     text_libVersion.x = 10;
