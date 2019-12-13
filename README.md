@@ -63,3 +63,6 @@ make their own application class and gameloop.
 ↑で直らず（Pixiのバージョンは上がった）
 >npm install serialize-javascript  
 serialize-javascript@1.9.1 -> 2.1.2で警告消失  
+
+**TypeScript のオブジェクト型リテラルいろいろ - Qiita**  
+[https://qiita.com/hida/items/fb0379353bbb71f8191b](https://qiita.com/hida/items/fb0379353bbb71f8191b)  
