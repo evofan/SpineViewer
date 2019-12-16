@@ -198,6 +198,8 @@ const anim_ary: string[] = [ // spineboy
 // const anim_length: number = anim_ary1.length;
 // let anim_index: number = 0;
 
+let isDragging = false;
+
 // container
 let container: PIXI.Container = new PIXI.Container();
 container.width = WIDTH;
@@ -209,7 +211,7 @@ container.pivot.y = 0;
 // container.interactive = true;
 // container.buttonMode = true;
 // container.isSprite = true;
-// container.interactiveChildren = true;
+container.interactiveChildren = true;
 stage.addChild(container);
 console.log(container);
 
@@ -294,6 +296,49 @@ loader
     text_fps.x = WIDTH - text_fps.width - offsetX;
     text_fps.y = 440;
 
+    for (let i: number = 0; i <= SPINEOBJ_NUM - 1; i++) {
+      spineObj[i] = new PIXI.spine.Spine(resources[`spineCharacter${i + 1}`].spineData);
+      console.log(spineObj[i]);
+      // let sp: PIXI.spine.Spine = spineObj[i];
+      spineObj[i].x = WIDTH / 2;
+      spineObj[i].y = HEIGHT / 2; // + offsetY;
+      // spine.scale.x = spine.scale.y = 0.5; // other
+      // sp.scale.x = sp.scale.y = 1.5; // powerup
+      // sp.y = 350; // powerup
+      spineObj[i].pivot.x = 0.5; //(0.5, 0.5);
+      spineObj[i].pivot.y = 0.5;
+      // sp.anchor.set(0, 0); // sprite
+      // sp.position.x = 0.5;
+      // sp.position.y = 0.5;
+
+      spineObj[i].interactive = true;
+      spineObj[i].buttonMode = true;
+
+      // let spriteName = `spriteName${i}`
+      /*
+      let sprite = new PIXI.Sprite();
+      sprite.addChild(sp);
+
+      // for Dragging
+      sprite.interactive = true;
+      sprite.buttonMode = true;
+      // sprite.interactiveChildren = true;
+      
+      sprite.anchor.set(0, 0);
+      sprite*/ spineObj[
+        i
+      ]
+        .on("pointerdown", onDragStart)
+        .on("pointerup", onDragEnd)
+        .on("pointerupoutside", onDragEnd)
+        .on("pointermove", onDragMove);
+
+      container.addChild(spineObj[i]);
+
+      //console.log("■Sprite(サイズ他): ", sprite); //
+      //container.addChild(sprite);
+
+      /*
     // spine1
     spineObj[0] = new PIXI.spine.Spine(resources.spineCharacter1.spineData);
     console.log(spineObj[0]);
@@ -313,6 +358,8 @@ loader
     spineObj[1].scale.x = spineObj[1].scale.y = 1.5; // powerup
     spineObj[1].y = 350; // powerup
     container.addChild(spineObj[1]);
+    */
+    }
 
     // app start
     requestAnimationFrame(animate);
@@ -513,3 +560,65 @@ function playAnimation2(obj: any) {
   // show anime name text
   displayAnimeName(num1, num2);
 }
+
+let onDragStart = (event: any) => {
+  console.log("onDragStart()", event.currentTarget);
+
+  isDragging = true;
+  //if (!event.target === null) {
+  // let sp: PIXI.Sprite = event.currentTarget;
+  let sp: PIXI.spine.Spine = event.currentTarget;
+  console.log("sp_start: ", sp);
+  // let sp = event.target
+  // this.sp = event.target;
+  sp.alpha = 0.5;
+  // sp.dragging = true; // TODO: type: spine -> sprite
+  // }
+};
+
+let onDragEnd = (event: any) => {
+  console.log("onDragEnd()");
+
+  isDragging = false;
+  // let sp: PIXI.Sprite = event.currentTarget;
+  let sp: PIXI.spine.Spine = event.currentTarget;
+  sp.alpha = 1;
+  // event.currentTarget = null;
+  // event.data = null;
+  /*
+  if (!event.target === null) {
+    let sp: PIXI.spine.Spine = event.target;
+    sp.alpha = 1;
+  }
+  */
+};
+
+let onDragMove = (event: any) => {
+  // console.log("onDragMove()", event);
+
+  // if (!event.currentTarget === null) {
+  // const mousePosition: any = event.data.getLocalPosition(event.currentTarget.parent);
+
+  // console.log(mousePosition);
+
+  if (isDragging) {
+    const newPosition: PIXI.Point = event.data.getLocalPosition(event.currentTarget);
+    console.log("newPosition: ", newPosition);
+
+    // let sp: PIXI.spine.Spine = event.target;
+    // let sp: any = event.currentTarget;
+    // let sp: PIXI.Sprite = event.currentTarget;
+    let sp: PIXI.spine.Spine = event.currentTarget;
+
+    console.log("■sp: ", sp);
+    // sp.x = newPosition.x;
+    // sp.y = newPosition.y;
+    // sp.children[0].x = renderer.plugins.interaction.mouse.global.x;
+    // sp.children[0].y = renderer.plugins.interaction.mouse.global.y;
+    sp.x = renderer.plugins.interaction.mouse.global.x;
+    sp.y = renderer.plugins.interaction.mouse.global.y;
+    // let oldX = sp.x;
+    // sp.x = mousePosition.x - oldX;
+  }
+  // }
+};
