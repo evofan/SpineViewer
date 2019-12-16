@@ -142,9 +142,7 @@ req.addEventListener(
 
     let leng: number = names.length;
     for (let i: number = 0; i < leng; i++) {
-      let button: HTMLButtonElement = <HTMLButtonElement>(
-        document.createElement("button")
-      );
+      let button: HTMLButtonElement = <HTMLButtonElement>document.createElement("button");
       button.textContent = `${names[i]}`;
       button.onclick = function() {
         let animeObj: { [s: string]: number } = { animNum1: 0, animNum2: i }; // dummy
@@ -268,8 +266,7 @@ loader
     star.anchor.set(0.5);
 
     // text_version
-    let version: string =
-      "pixi-spine 2.1.6\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    let version: string = "pixi-spine 2.1.6\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
     text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
     container.addChild(text_libVersion);
     text_libVersion.x = 10;
@@ -300,9 +297,7 @@ loader
     text_fps.y = 440;
 
     for (let i: number = 0; i <= SPINEOBJ_NUM - 1; i++) {
-      spineObj[i] = new PIXI.spine.Spine(
-        resources[`spineCharacter${i + 1}`].spineData
-      );
+      spineObj[i] = new PIXI.spine.Spine(resources[`spineCharacter${i + 1}`].spineData);
       console.log(spineObj[i]);
       // let sp: PIXI.spine.Spine = spineObj[i];
       spineObj[i].x = WIDTH / 2;
@@ -330,16 +325,15 @@ loader
       // sprite.interactiveChildren = true;
       
       sprite.anchor.set(0, 0);
-      sprite*/ spineObj[i].on(
-        "pointerdown",
-        onDragStart
-      )
+      sprite*/ spineObj[
+        i
+      ]
+        .on("pointerdown", onDragStart)
         .on("pointerup", onDragEnd)
         .on("pointerupoutside", onDragEnd)
         .on("pointermove", onDragMove);
 
-
-        container.addChild(spineObj[i]);
+      container.addChild(spineObj[i]);
 
       //console.log("■Sprite(サイズ他): ", sprite); //
       //container.addChild(sprite);
@@ -603,16 +597,12 @@ let onDragMove = (event: any) => {
   // console.log("onDragMove()", event);
 
   // if (!event.currentTarget === null) {
-  const mousePosition: any = event.data.getLocalPosition(
-    event.currentTarget.parent
-  );
+  // const mousePosition: any = event.data.getLocalPosition(event.currentTarget.parent);
 
   // console.log(mousePosition);
 
   if (isDragging) {
-    const newPosition: PIXI.Point = event.data.getLocalPosition(
-      event.currentTarget
-    );
+    const newPosition: PIXI.Point = event.data.getLocalPosition(event.currentTarget);
     console.log("newPosition: ", newPosition);
 
     // let sp: PIXI.spine.Spine = event.target;
