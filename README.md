@@ -1,8 +1,38 @@
 # A tool for reading Spine files on PixiJS and checking animation.
-※背景画像・Spineデータ・アニメーションは差し替えられるようにする。
 
 **DEMO**  
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
+
+**USAGE**  
+
+npm install  
+npm run build  
+
+**custom setting**  
+
+SpineViewer\src\constants.ts
+~~~
+------------------------------------------------------------------------------------
+// stage settings
+export const STAGES = {
+  WIDTH: 720,
+  HEIGHT: 480,
+  BG_COLOR: 0x000000
+};
+
+// path for use assets
+export const ASSETS = {
+  ASSET_SPINE_NUM : 1,
+  ASSET_BG: "assets/images/pic_bg.jpg", // your bg image
+  // ASSET_SPINE1: "assets/spine/alien/export/alien.json" // your spine animation
+  ASSET_SPINE1: "assets/spine/spineboy/export/spineboy.json" // your spine animation
+};
+
+export const GAME = {
+  FPS: 60 // framerate ex. 30
+};
+------------------------------------------------------------------------------------
+~~~
 
 reference  
 
