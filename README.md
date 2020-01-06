@@ -66,3 +66,8 @@ serialize-javascript@1.9.1 -> 2.1.2で警告消失
 
 **TypeScript のオブジェクト型リテラルいろいろ - Qiita**  
 [https://qiita.com/hida/items/fb0379353bbb71f8191b](https://qiita.com/hida/items/fb0379353bbb71f8191b)  
+
+
+**v5 Migration Guide**  
+[https://github.com/pixijs/pixi.js/wiki/v5-Migration-Guide](https://github.com/pixijs/pixi.js/wiki/v5-Migration-Guide)  
+>PIXI.mesh.Mesh to PIXI.SimpleMesh
