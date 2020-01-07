@@ -4,7 +4,6 @@
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
 
 **USAGE**  
-
 npm install  
 npm run build  
 npm run start  
@@ -40,7 +39,7 @@ Use: >PixiJS v5 Spine 3.8 - this branch, latest npm **
 
 **Spine project sample file**  
 [http://ja.esotericsoftware.com/spine-examples](http://ja.esotericsoftware.com/spine-examples)  
-Use: >Alien  
+Use: >Alien, Spineboy  
 
 **TypeScriptチュートリアル① -環境構築編-**  
 [https://qiita.com/ochiochi/items/efdaa0ae7d8c972c8103](https://qiita.com/ochiochi/items/efdaa0ae7d8c972c8103)  
