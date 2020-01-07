@@ -7,12 +7,12 @@
 
 npm install  
 npm run build  
+npm run start  
+http://localhost:8080/
 
 **custom setting**  
-
 SpineViewer\src\constants.ts
 ~~~
-------------------------------------------------------------------------------------
 // stage settings
 export const STAGES = {
   WIDTH: 720,
@@ -22,16 +22,14 @@ export const STAGES = {
 
 // path for use assets
 export const ASSETS = {
-  ASSET_SPINE_NUM : 1,
   ASSET_BG: "assets/images/pic_bg.jpg", // your bg image
-  // ASSET_SPINE1: "assets/spine/alien/export/alien.json" // your spine animation
   ASSET_SPINE1: "assets/spine/spineboy/export/spineboy.json" // your spine animation
+  // ASSET_SPINE1: "assets/spine/alien/export/alien.json" // your spine animation
 };
 
-export const GAME = {
+export const GAMES = {
   FPS: 60 // framerate ex. 30
 };
-------------------------------------------------------------------------------------
 ~~~
 
 reference  
