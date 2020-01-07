@@ -22,8 +22,11 @@ export const STAGES = {
 // path for use assets
 export const ASSETS = {
   ASSET_BG: "assets/images/pic_bg.jpg", // your bg image
+  // ASSET_BG: "", // if you don't want to use bg image
   ASSET_SPINE1: "assets/spine/spineboy/export/spineboy.json" // your spine animation
   // ASSET_SPINE1: "assets/spine/alien/export/alien.json" // your spine animation
+  // ASSET_SPINE1: "assets/spine/dragon/export/dragon.json" // your spine animation
+  // ASSET_SPINE1: "assets/spine/powerup/export/powerup.json" // your spine animation
 };
 
 export const GAMES = {
