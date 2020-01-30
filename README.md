@@ -34,7 +34,10 @@ export const ASSETS = {
 export const GAMES = {
   FPS: 60 // framerate ex. 30
 };
-~~~
+~~~  
+
+**TODO**  
+Controllable timeScale.
 
 reference  
 
