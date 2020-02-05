@@ -289,6 +289,9 @@ let playAnimation = (obj: any) => {
     return false;
   }
 
+  // timescale to be able adjust
+  animeObj.state.timeScale = 1;
+
   // play anime
   animeObj.state.setAnimation(0, animeName, animeLoop);
 
