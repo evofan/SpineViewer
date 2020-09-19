@@ -307,7 +307,7 @@ let playAnimation = (obj: any) => {
  * start drag
  * @param { object } event
  */
-let onDragStart = (e: PIXI.interaction.InteractionEvent) => {
+let onDragStart = (e: PIXI.InteractionEvent) => {
   isDragging = true;
   let sp: PIXI.DisplayObject = e.currentTarget as PIXI.DisplayObject;
   sp.alpha = 0.75;
@@ -317,7 +317,7 @@ let onDragStart = (e: PIXI.interaction.InteractionEvent) => {
  * stop drag
  * @param { object } event
  */
-let onDragEnd = (e: PIXI.interaction.InteractionEvent) => {
+let onDragEnd = (e: PIXI.InteractionEvent) => {
   isDragging = false;
   let sp: PIXI.DisplayObject = e.currentTarget;
   sp.alpha = 1;
@@ -327,7 +327,7 @@ let onDragEnd = (e: PIXI.interaction.InteractionEvent) => {
  * move drag
  * @param { object } event
  */
-let onDragMove = (e: PIXI.interaction.InteractionEvent) => {
+let onDragMove = (e: PIXI.InteractionEvent) => {
   if (isDragging) {
     let sp: PIXI.DisplayObject = e.currentTarget;
     const point: { x: number; y: number } = e.data.global;

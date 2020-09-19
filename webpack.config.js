@@ -13,7 +13,13 @@ module.exports = {
       // title: "Pixi.js Demo",
       template: "./src/html/index.html"
     }),
-    new CopyPlugin([{ from: "src/assets", to: "assets" }])
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "src/assets", to: "assets"
+        }
+      ]
+    })
   ],
 
   output: {
@@ -40,5 +46,5 @@ module.exports = {
       }
     ]
   }
-  
+
 };
