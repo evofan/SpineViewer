@@ -132,7 +132,7 @@ loader.load((loader: PIXI.Loader, resources: any) => {
 
   // text version
   let version: string =
-    "pixi-spine 2.1.6\nPixiJS 5.2.0\nSpine 3.8.55\nwebpack 4.41.2";
+    "pixi-spine 2.1.9\nPixiJS 5.3.3\nSpine 3.8.55\nwebpack 4.44.2";
   text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
   container.addChild(text_libVersion);
   text_libVersion.x = 10;
