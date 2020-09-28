@@ -16,7 +16,7 @@ const BG_COLOR: number = STAGES.BG_COLOR;
 const renderer: PIXI.Renderer = new PIXI.Renderer({
   width: WIDTH,
   height: HEIGHT,
-  backgroundColor: BG_COLOR
+  backgroundColor: BG_COLOR,
 });
 document.body.appendChild(renderer.view);
 
@@ -63,7 +63,7 @@ req.addEventListener(
     let names: string[] = [];
 
     // Get animation name by key name
-    Object.keys(jsonObj.animations).forEach(ele => {
+    Object.keys(jsonObj.animations).forEach((ele) => {
       names.push(ele);
       anim_ary.push(ele);
     });
@@ -74,7 +74,7 @@ req.addEventListener(
         document.createElement("button")
       );
       button.textContent = `${names[i]}`;
-      button.onclick = function() {
+      button.onclick = function () {
         let animeObj: { [s: string]: number } = { animNum1: 0, animNum2: i };
         playAnimation(animeObj);
       };
@@ -131,9 +131,9 @@ loader.load((loader: PIXI.Loader, resources: any) => {
   }
 
   // text version
-  let version: string =
-    "pixi-spine 2.1.9\nPixiJS 5.3.3\nSpine 3.8.55\nwebpack 4.44.2";
-  text_libVersion = setText(version, "Arial", 24, 0xf0fff0, "left", "bold");
+  let pixi_ver: string = PIXI.VERSION;
+  let all_version: string = `PixiJS ${pixi_ver}\npixi-spine 2.1.9\nSpine 3.8.55\nwebpack 4.44.2`;
+  text_libVersion = setText(all_version, "Arial", 24, 0xf0fff0, "left", "bold");
   container.addChild(text_libVersion);
   text_libVersion.x = 10;
   text_libVersion.y = 10;
@@ -241,7 +241,7 @@ let setText = (
     strokeThickness: sthickness,
     dropShadow: isShadow,
     dropShadowColor: shadowcolor,
-    lineJoin: "round"
+    lineJoin: "round",
   });
 };
 
@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
             animNum1: num1,
             animNum2: num2,
             handleEvent: playAnimation,
-            this: button
+            this: button,
           },
           false
         );

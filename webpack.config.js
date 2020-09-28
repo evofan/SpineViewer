@@ -5,6 +5,18 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 
+  // When the mode is set to "production", the JS file is output in an optimized state
+  // When the mode is set to "development", the source map is valid and the JS file is output
+  // mode: "production",
+  // or
+  mode: "production",
+
+  // Launch local development environment, browser automatically opens localhost at runtime
+  devServer: {
+    contentBase: "dist",
+    open: true
+  },
+
   entry: "./src/index.ts",
 
   plugins: [
@@ -42,8 +54,16 @@ module.exports = {
       {
         // 拡張子が.tsで終わるファイルに対して、TypeScriptコンパイラを適用する
         test: /\.ts$/,
-        loader: "ts-loader"
-      }
+        loader: "ts-loader",
+
+
+      },
+      {
+        // SourceMapの警告を消す
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
     ]
   }
 
