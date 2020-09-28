@@ -1,6 +1,6 @@
 # A tool for reading Spine files on PixiJS and checking animation.
 
-![https://evofan.github.io/SpineViewer/pic_spine_viwer_title_x2_02.jpg](https://evofan.github.io/SpineViewer/pic_spine_viwer_title_x2_02.jpg "image")  
+![https://evofan.github.io/SpineViewer/screenshot/pic_spine_viwer_title_x2_02.jpg](https://evofan.github.io/SpineViewer/screenshot/pic_spine_viwer_title_x2_02.jpg "image")  
 
 **DEMO**  
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
@@ -110,3 +110,13 @@ serialize-javascript@1.9.1 -> 2.1.2で警告消失
 **ERROR in C:\Users\USER\Documents\SpineViewer\src\index.ts(330,27)**  
 [https://pixijs.download/dev/docs/PIXI.interaction.InteractionEvent.html](https://pixijs.download/dev/docs/PIXI.interaction.InteractionEvent.html)  
 >PIXI.interaction.InteractionEvent -> See: PIXI.InteractionEvent  
+
+**DevTools failed to load SourceMap for webpack:///node_modules//…js.map
+HTTP error: status code 404, net::ERR_UNKNOWN_URL_SCHEME**  
+[https://stackoverflow.com/questions/61767538/devtools-failed-to-load-sourcemap-for-webpack-node-modules-js-map-http-e](https://stackoverflow.com/questions/61767538/devtools-failed-to-load-sourcemap-for-webpack-node-modules-js-map-http-e)  
+>use source-map-loader loader.  
+
+result:  
+![https://evofan.github.io/SpineViewer/screenshot/pic_warn_sourcemap.png](https://evofan.github.io/SpineViewer/screenshot/pic_warn_sourcemap.png "image")  
+
+
