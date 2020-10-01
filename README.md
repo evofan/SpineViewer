@@ -36,8 +36,10 @@ export const GAMES = {
 };
 ~~~  
 
-**TODO**  
-Controllable timeScale.
+**TODO:**  
+~~Controllable timeScale.~~ end  
+<img src="https://raw.githubusercontent.com/evofan/SpineViewer/master/screenshot/pic_change_anime_scale.jpg" width="50%">  
+Multiple object display?  
 
 reference  
 
@@ -118,5 +120,11 @@ HTTP error: status code 404, net::ERR_UNKNOWN_URL_SCHEME**
 
 result:  
 ![https://evofan.github.io/SpineViewer/screenshot/pic_warn_sourcemap.png](https://evofan.github.io/SpineViewer/screenshot/pic_warn_sourcemap.png "image")  
+
+**dat.GUI**  
+[https://github.com/dataarts/dat.gui](https://github.com/dataarts/dat.gui)  
+
+**dat.gui を使ってみた - しまむーの備忘録**  
+[https://shsm385.hatenablog.com/entry/2017/12/31/171446](https://shsm385.hatenablog.com/entry/2017/12/31/171446)  
 
 
