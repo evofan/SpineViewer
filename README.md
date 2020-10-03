@@ -6,9 +6,10 @@
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
 
 **USAGE**  
-npm install  
-npm run build  
-npm run start  
+`npm install`  
+`npm run build`  
+`npm run start`  
+
 http://localhost:8080/
 
 **custom setting**  
