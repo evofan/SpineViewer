@@ -6,6 +6,7 @@ import { kMaxLength } from "buffer";
 import { STAGES, ASSETS, GAMES } from "./constants";
 // ES6:
 import * as dat from "dat.gui";
+import { GUI } from "dat-gui";
 // npm install -D @types/dat.gui
 
 // console.log(PIXI);
@@ -27,15 +28,17 @@ document.body.appendChild(renderer.view);
 const stage: PIXI.Container = new PIXI.Container();
 
 // dat.GUI
-const gui: any = new dat.GUI();
+const gui: dat.GUI = new dat.GUI();
 
 // GUI parameter
 class guiCtrl {
   public fps: number;
   public animeTimeScale: number;
+  public animeLoop: boolean;
   constructor() {
     this.fps = GAMES.FPS; // default fps
     this.animeTimeScale = GAMES.ANIME_TIME_SCALE; // default
+    this.animeLoop = GAMES.ANIME_LOOP;
   }
 }
 
@@ -53,10 +56,18 @@ const setAnimeTimeScale = () => {
   setTextAnimeTimeScale();
 };
 
-const guiObj = new guiCtrl();
-const folder = gui.addFolder("Control Panel");
+const setAnimeLoop = () => {
+  // console.log("guiObj.setAnimeLoop:" + guiObj.animeLoop);
+  GAMES.ANIME_LOOP ? (GAMES.ANIME_LOOP = false) : (GAMES.ANIME_LOOP = true);
+  clearText(text_anime_loop);
+  setTextAnimeLoop();
+};
+
+const guiObj: guiCtrl = new guiCtrl();
+const folder: dat.GUI = gui.addFolder("Control Panel");
 folder.add(guiObj, "animeTimeScale", 0.1, 10).onChange(setAnimeTimeScale);
 folder.add(guiObj, "fps", 1, 60).onChange(setFPS);
+folder.add(guiObj, "animeLoop").onChange(setAnimeLoop);
 folder.open();
 
 // Custom GameLoop(v5), call requestAnimationFrame directly.
@@ -151,7 +162,8 @@ let text_libVersion: PIXI.Text,
   text_animationName: PIXI.Text,
   text_error: PIXI.Text,
   text_fps: PIXI.Text,
-  text_anime_time_scale: PIXI.Text;
+  text_anime_time_scale: PIXI.Text,
+  text_anime_loop: PIXI.Text;
 
 // load
 if (ASSET_BG === "") {
@@ -180,6 +192,7 @@ loader.load((loader: PIXI.Loader, resources: any) => {
 
   setTextFPS();
   setTextAnimeTimeScale();
+  setTextAnimeLoop();
 
   for (let i: number = 0; i <= SPINEOBJ_NUM - 1; i++) {
     spineObj[i] = new PIXI.spine.Spine(
@@ -243,6 +256,24 @@ const setTextAnimeTimeScale = () => {
   let offsetX: number = 10;
   text_anime_time_scale.x = WIDTH - text_anime_time_scale.width - offsetX;
   text_anime_time_scale.y = 410;
+};
+
+/**
+ * Set Animation Loop value
+ */
+const setTextAnimeLoop = () => {
+  text_anime_loop = setText(
+    `Animation Loop: ${GAMES.ANIME_LOOP}`,
+    "Arial",
+    24,
+    0x00cc00,
+    "right",
+    "bold"
+  );
+  container.addChild(text_anime_loop);
+  let offsetX: number = 10;
+  text_anime_loop.x = WIDTH - text_anime_loop.width - offsetX;
+  text_anime_loop.y = 380;
 };
 
 /**
@@ -353,7 +384,6 @@ let playAnimation = (obj: any) => {
   let num1: number = obj.animNum1;
   let num2: number = obj.animNum2;
 
-  let animeLoop: boolean = false; // TODO: configurable
   let animeObj: PIXI.spine.Spine = spineObj[num1];
   let animeName: string = anim_ary[num2];
 
@@ -366,7 +396,7 @@ let playAnimation = (obj: any) => {
   animeObj.state.timeScale = GAMES.ANIME_TIME_SCALE;
 
   // play anime
-  animeObj.state.setAnimation(0, animeName, animeLoop);
+  animeObj.state.setAnimation(0, animeName, GAMES.ANIME_LOOP);
 
   // clear text
   if (text_animationName) {
