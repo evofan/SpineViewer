@@ -36,14 +36,15 @@ export const ASSETS = {
 
 export const GAMES = {
   FPS: 60, // framerate ex. 30
-  ANIME_TIME_SCALE : 1 // Animation Time Scale. 0.1(slow) - 1(Normal) - 10(fast)
+  ANIME_TIME_SCALE : 1, // Animation Time Scale. 0.1(slow) - 1(Normal) - 10(fast)
+  ANIME_LOOP: false // Animation Loop
 };
 ~~~  
 
 **TODO:**  
 ~~Controllable timeScale.~~ end  
 <img src="https://raw.githubusercontent.com/evofan/SpineViewer/master/screenshot/pic_change_anime_scale.jpg" width="50%">  
-Animation Loop option.  
+~~Animation Loop option.~~ end  
 Multiple object display?  
 
 reference  
@@ -131,4 +132,8 @@ result:
 
 **dat.gui を使ってみた - しまむーの備忘録**  
 [https://shsm385.hatenablog.com/entry/2017/12/31/171446](https://shsm385.hatenablog.com/entry/2017/12/31/171446)  
-公式のチュートリアルが落ちてるので、こちらの設定を参考に
+公式のチュートリアルが落ちてるので、こちらの設定を参考に  
+
+**具体例から学ぶ！作り込みたいWeb制作のためのJavaScriptライブラリdat.GUIのススメ - KAYAC engineers blog**  
+[https://techblog.kayac.com/how-to-dat-gui](https://techblog.kayac.com/how-to-dat-gui)  
+>状態の選択（セレクトボックス）
