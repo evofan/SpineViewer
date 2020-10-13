@@ -4,17 +4,17 @@ window.PIXI = PIXI;
 import "pixi-spine";
 import { kMaxLength } from "buffer";
 import { STAGES, ASSETS, GAMES } from "./constants";
-// ES6:
 import * as dat from "dat.gui";
-import { GUI } from "dat-gui";
-// npm install -D @types/dat.gui
-
-// console.log(PIXI);
+// import { GUI } from "dat-gui";
 
 // init
 const WIDTH: number = STAGES.WIDTH;
 const HEIGHT: number = STAGES.HEIGHT;
 const BG_COLOR: number = STAGES.BG_COLOR;
+
+// TODO:
+// GAMES.FPS -> const FPS: number = GAMES.FPS;
+// and Scale, Loop too.
 
 // renderer
 const renderer: PIXI.Renderer = new PIXI.Renderer({
@@ -36,28 +36,25 @@ class guiCtrl {
   public animeTimeScale: number;
   public animeLoop: boolean;
   constructor() {
-    this.fps = GAMES.FPS; // default fps
-    this.animeTimeScale = GAMES.ANIME_TIME_SCALE; // default
-    this.animeLoop = GAMES.ANIME_LOOP;
+    this.fps = GAMES.FPS; // default fps ... Does not affect Spien animation speed.
+    this.animeTimeScale = GAMES.ANIME_TIME_SCALE; // default timescale
+    this.animeLoop = GAMES.ANIME_LOOP; // default loop
   }
 }
 
-//
+// GUI method
 const setFPS = () => {
-  // console.log("guiObj.fps:" + guiObj.fps);
   GAMES.FPS = Math.round(guiObj.fps);
   clearText(text_fps);
   setTextFPS();
 };
 const setAnimeTimeScale = () => {
-  // console.log("guiObj.animeTimeScale:" + guiObj.animeTimeScale);
   GAMES.ANIME_TIME_SCALE = Math.round(guiObj.animeTimeScale * 10) / 10;
   clearText(text_anime_time_scale);
   setTextAnimeTimeScale();
 };
 
 const setAnimeLoop = () => {
-  // console.log("guiObj.setAnimeLoop:" + guiObj.animeLoop);
   GAMES.ANIME_LOOP ? (GAMES.ANIME_LOOP = false) : (GAMES.ANIME_LOOP = true);
   clearText(text_anime_loop);
   setTextAnimeLoop();
@@ -73,13 +70,12 @@ folder.open();
 // Custom GameLoop(v5), call requestAnimationFrame directly.
 let oldTime: number = Date.now();
 let ms: number;
-let fps: number = GAMES.FPS;
 const COE: number = 16.67;
 let animate = () => {
   let newTime: number = Date.now();
   let deltaTime: number = newTime - oldTime;
-  ms = Math.round(fps * COE);
-  console.log("fps: " + fps + " " + "ms: " + ms);
+  ms = Math.round(GAMES.FPS * COE);
+  // console.log("fps: " + GAMES.FPS + " " + "ms: " + ms);
   oldTime = newTime;
   deltaTime < 0 ? (deltaTime = 0) : deltaTime;
   deltaTime > ms ? (deltaTime = ms) : deltaTime;
@@ -94,7 +90,6 @@ let loader: PIXI.Loader = new PIXI.Loader();
 const ASSET_BG: string = ASSETS.ASSET_BG;
 const ASSET_SPINE1: string = ASSETS.ASSET_SPINE1;
 const SPINEOBJ_NUM: number = 1; // now Fixed
-
 const anim_ary: string[] = [];
 const spineLoaderOptions: object = { metadata: { spineSkeletonScale: 0.5 } };
 let SP_HEIGHT: number;
@@ -144,7 +139,7 @@ req.open("GET", ASSET_SPINE1, true);
 req.responseType = "json";
 req.send(null);
 
-// container
+// container for anime and bg
 let container: PIXI.Container = new PIXI.Container();
 container.width = WIDTH;
 container.height = HEIGHT;
@@ -154,16 +149,27 @@ container.pivot.x = 0.5;
 container.pivot.y = 0.5;
 stage.addChild(container);
 
+// container for text
+let container_text: PIXI.Container = new PIXI.Container();
+container_text.width = WIDTH;
+container_text.height = HEIGHT;
+container_text.x = 0;
+container_text.y = 0;
+container_text.pivot.x = 0.5;
+container_text.pivot.y = 0.5;
+stage.addChild(container_text);
+
 // bg
 let bg: PIXI.Sprite;
 
 // text
 let text_libVersion: PIXI.Text,
   text_animationName: PIXI.Text,
-  text_error: PIXI.Text,
+  // text_error: PIXI.Text,
   text_fps: PIXI.Text,
   text_anime_time_scale: PIXI.Text,
   text_anime_loop: PIXI.Text;
+let offsetX: number = 10;
 
 // load
 if (ASSET_BG === "") {
@@ -186,7 +192,7 @@ loader.load((loader: PIXI.Loader, resources: any) => {
   let pixi_ver: string = PIXI.VERSION;
   let all_version: string = `PixiJS ${pixi_ver}\npixi-spine 2.1.9\nSpine 3.8.55\nwebpack 4.44.2`;
   text_libVersion = setText(all_version, "Arial", 24, 0xf0fff0, "left", "bold");
-  container.addChild(text_libVersion);
+  container_text.addChild(text_libVersion);
   text_libVersion.x = 10;
   text_libVersion.y = 10;
 
@@ -225,7 +231,6 @@ loader.onError.add(() => {
  * Set Text for FPS value
  */
 const setTextFPS = () => {
-  // text fps
   text_fps = setText(
     `FPS: ${GAMES.FPS}`,
     "Arial",
@@ -234,8 +239,7 @@ const setTextFPS = () => {
     "right",
     "bold"
   );
-  container.addChild(text_fps);
-  let offsetX: number = 10;
+  container_text.addChild(text_fps);
   text_fps.x = WIDTH - text_fps.width - offsetX;
   text_fps.y = 440;
 };
@@ -252,8 +256,7 @@ const setTextAnimeTimeScale = () => {
     "right",
     "bold"
   );
-  container.addChild(text_anime_time_scale);
-  let offsetX: number = 10;
+  container_text.addChild(text_anime_time_scale);
   text_anime_time_scale.x = WIDTH - text_anime_time_scale.width - offsetX;
   text_anime_time_scale.y = 410;
 };
@@ -270,8 +273,7 @@ const setTextAnimeLoop = () => {
     "right",
     "bold"
   );
-  container.addChild(text_anime_loop);
-  let offsetX: number = 10;
+  container_text.addChild(text_anime_loop);
   text_anime_loop.x = WIDTH - text_anime_loop.width - offsetX;
   text_anime_loop.y = 380;
 };
@@ -282,12 +284,12 @@ const setTextAnimeLoop = () => {
  */
 let clearText = (t: PIXI.Text) => {
   t.text = "";
-  container.removeChild(t);
+  container_text.removeChild(t);
 };
 
 /**
- * Change & Play Alien Animation.
- * num1 : for multiple spine animations
+ * Set Text for animationName
+ * (num1 : for multiple spine animations)
  */
 let displayAnimeName = (num1: number, num2: number) => {
   let animation: string = `animation: ${anim_ary[num2]}`;
@@ -303,8 +305,8 @@ let displayAnimeName = (num1: number, num2: number) => {
     false,
     "#666666"
   );
-  container.addChild(text_animationName);
-  text_animationName.x = WIDTH - text_animationName.width - 10;
+  container_text.addChild(text_animationName);
+  text_animationName.x = WIDTH - text_animationName.width - offsetX;
   text_animationName.y = 10;
 };
 
@@ -376,11 +378,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Play spine animation by animation-name
+ * Play spine animation by anime name
  * @param { object } animation object
  */
 let playAnimation = (obj: any) => {
-  console.log("playAnimation()", obj);
+  // console.log("playAnimation()", obj);
   let num1: number = obj.animNum1;
   let num2: number = obj.animNum2;
 
