@@ -125,6 +125,7 @@ result:
 
 **dat.GUI**  
 [https://github.com/dataarts/dat.gui](https://github.com/dataarts/dat.gui)  
+`npm install -D @types/dat.gui`  
 
 **dat.gui を使ってみた - しまむーの備忘録**  
 [https://shsm385.hatenablog.com/entry/2017/12/31/171446](https://shsm385.hatenablog.com/entry/2017/12/31/171446)  
