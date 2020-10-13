@@ -1,6 +1,6 @@
 # A tool for reading Spine files on PixiJS and checking animation.
 
-![https://evofan.github.io/SpineViewer/screenshot/pic_spine_viwer_title_x2_02.jpg](https://evofan.github.io/SpineViewer/screenshot/pic_spine_viwer_title_x2_02.jpg "image")  
+<img src="https://raw.githubusercontent.com/evofan/SpineViewer/master/screenshot/pic_screenshot202010.jpg" width="75%">  
 
 **DEMO**  
 [https://evofan.github.io/SpineViewer/dist/](https://evofan.github.io/SpineViewer/dist/)  
@@ -28,9 +28,6 @@ export const ASSETS = {
   // ASSET_BG: "assets/images/pic_bg2.jpg", // your bg image
   // ASSET_BG: "", // if you don't want to use bg image
   ASSET_SPINE1: "assets/spine/spineboy/export/spineboy.json" // your spine animation
-  // ASSET_SPINE1: "assets/spine/alien/export/alien.json" // your spine animation
-  // ASSET_SPINE1: "assets/spine/dragon/export/dragon.json" // your spine animation
-  // ASSET_SPINE1: "assets/spine/powerup/export/powerup.json" // your spine animation
   // ASSET_SPINE1: "assets/spine/tank/export/tank-pro.json" // your spine animation
 };
 
@@ -43,7 +40,6 @@ export const GAMES = {
 
 **TODO:**  
 ~~Controllable timeScale.~~ end  
-<img src="https://raw.githubusercontent.com/evofan/SpineViewer/master/screenshot/pic_change_anime_scale.jpg" width="50%">  
 ~~Animation Loop option.~~ end  
 Multiple object display?  
 
