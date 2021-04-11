@@ -1,1 +1,1 @@
-npm run build
+cmd /k npm run build
