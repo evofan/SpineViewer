@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { loader, IgnorePlugin, DllPlugin } from "webpack";
+// import { loader, IgnorePlugin, DllPlugin } from "webpack";
 window.PIXI = PIXI;
 import "pixi-spine";
 import { kMaxLength } from "buffer";
@@ -115,6 +115,13 @@ req.addEventListener(
 
     let leng: number = names.length;
     for (let i: number = 0; i < leng; i++) {
+
+      if (i === 0) {
+        let divtemp: HTMLElement = <HTMLElement>document.createElement("div");
+        divtemp.textContent = " ";
+        document.body.appendChild(divtemp);
+      }
+
       let button: HTMLButtonElement = <HTMLButtonElement>(
         document.createElement("button")
       );
@@ -124,11 +131,13 @@ req.addEventListener(
         playAnimation(animeObj);
       };
       document.body.appendChild(button);
+
       let divider: HTMLElement = <HTMLElement>document.createElement("span");
       divider.textContent = " ";
       document.body.appendChild(divider);
+
+      let newLine: HTMLElement = <HTMLElement>document.createElement("br");
       if (i === leng - 1) {
-        let newLine: HTMLElement = <HTMLElement>document.createElement("br");
         document.body.appendChild(newLine);
       }
     }
