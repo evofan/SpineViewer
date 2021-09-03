@@ -199,7 +199,7 @@ loader.load((loader: PIXI.Loader, resources: any) => {
 
   // text version
   let pixi_ver: string = PIXI.VERSION;
-  let all_version: string = `PixiJS ${pixi_ver}\npixi-spine 2.1.9\nSpine 3.8.55\nwebpack 4.44.2`;
+  let all_version: string = `PixiJS ${pixi_ver}\npixi-spine 2.1.9\nSpine 3.8.55\nwebpack 5.52.0`;
   text_libVersion = setText(all_version, "Arial", 24, 0xf0fff0, "left", "bold");
   container_text.addChild(text_libVersion);
   text_libVersion.x = 10;
