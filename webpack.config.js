@@ -13,7 +13,8 @@ module.exports = {
 
   // Launch local development environment, browser automatically opens localhost at runtime
   devServer: {
-    contentBase: "dist",
+    // contentBase: "dist",
+    strict: "dist",
     open: true
   },
 
@@ -45,7 +46,7 @@ module.exports = {
 
   devServer: {
     // webpack-dev-serverの公開フォルダ
-    contentBase: path.join(__dirname, "dist")
+    // contentBase: path.join(__dirname, "dist")
   },
 
   // モジュールに適用するルールの設定（ここではローダーの設定を行う事が多い）
@@ -65,6 +66,12 @@ module.exports = {
         use: ['source-map-loader'],
       },
     ]
-  }
+  },
+
+  // performance: { hints: false }
+  performance: {
+    maxEntrypointSize: 1000000, // 1Mbyte
+    maxAssetSize: 1000000, // 1Mbyte
+  },
 
 };
