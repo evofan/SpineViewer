@@ -42,7 +42,7 @@ export const GAMES = {
 ~~Controllable timeScale.~~ end  
 ~~Animation Loop option.~~ end  
 Multiple object display?  
-dat.gui and ansi-html security alert(No patched version is available)  
+dat.gui ~~and ansi-html~~ security alert(No patched version is available)  
 Spine ver. 4.x  
 
 reference  
